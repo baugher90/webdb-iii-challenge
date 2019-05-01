@@ -52,7 +52,7 @@ server.get("/api/cohorts/:id/students", async (req, res) => {
   try {
     const id = req.params.id;
     const cohort = await db("cohorts as c")
-      .join("students as s", "s.id", "c.cohorts_id")
+      .join("students as s", "s.cohorts_id", "c.id")
       .select("s.id", "s.name")
       .where("c.id", id)
       .first();
@@ -94,7 +94,7 @@ server.put("/api/cohorts/:id", async (req, res) => {
 
       res.status(200).json(cohort);
     } else {
-      res.status(404).json({ message: "Records not found" });
+      res.status(404).json({ message: "Cohort not found" });
     }
   } catch (error) {}
 });
@@ -108,9 +108,9 @@ server.delete("/api/cohorts/:id", async (req, res) => {
       .del();
 
     if (count > 0) {
-      res.status(204).end();
+      res.status(200).json({ message: "Cohort Removed" });
     } else {
-      res.status(404).json({ message: "Records not found" });
+      res.status(404).json({ message: "Cohort not found" });
     }
   } catch (error) {}
 });
