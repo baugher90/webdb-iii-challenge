@@ -1,6 +1,7 @@
 const knex = require("knex");
 const knexConfig = require("../knexfile");
 const db = knex(knexConfig.development);
+const router = require("express").Router();
 
 //==========================================Create Router
 router.post("/", (req, res) => {
@@ -81,7 +82,7 @@ router.put("/:id", (req, res) => {
 });
 //==========================================Delete Router
 router.delete("/:id", (req, res) => {
-    db("cohort")
+    db("cohorts")
     .where({id: req.params.id})
     .del()
     .then(count =>{
