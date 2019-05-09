@@ -1,5 +1,5 @@
 exports.seed = function(knex, Promise) {
-  return knex("roles").insert([
+  return knex("cohorts").insert([
     { name: "WEB 15" },
     { name: "WEB 16" },
     { name: "WEB 17" },
