@@ -4,7 +4,22 @@ const db = knex(knexConfig.development)
 
 //==========================================Create Router
 router.post("/",(req,res)=>{
-
+    db("students")
+    .insert(req.body,"id")
+    .then(id=>{
+        db("students")
+            .where({id})
+            .first()
+            .then(student=>{
+                res.status(201).json(student)
+            })
+            .catch(err=>{
+                res.status(500).json(err)
+            })
+    })
+    .catch(err=>{
+        res.status(500).json(err)
+    })
 })
 //==========================================Read Router
 router.get("/",(req,res)=>{

@@ -4,7 +4,22 @@ const db = knex(knexConfig.development)
 
 //==========================================Create Router
 router.post("/",(req,res)=>{
-
+    db("cohorts")
+    .insert(req.body,"id")
+    .then(id=>{
+        db("cohorts")
+            .where({id})
+            .first()
+            .then(cohort=>{
+                res.status(201).json(cohort)
+            })
+            .catch(err=>{
+                res.status(500).json({Message:`Could not send Cohort to Lambda. Try again.`})
+            })
+    })
+    .catch(err=>{
+        res.status(500).json(err)
+    })
 })
 //==========================================Read Router
 router.get("/",(req,res)=>{
